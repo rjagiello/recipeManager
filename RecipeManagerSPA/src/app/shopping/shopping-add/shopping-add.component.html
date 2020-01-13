@@ -1,0 +1,47 @@
+<div class="modal-body text-center">
+  <form class="center" [formGroup]="shoppingListForm" (ngSubmit)="addShoppingList()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal.emit(null)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h2 class="text-center text-primary">Dodaj listę zakupów</h2>
+    <hr>
+  
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Nazwa listy" formControlName="name"
+        [ngClass]="{'is-invalid': shoppingListForm.get('name').errors && shoppingListForm.get('name').touched}">
+      <div class="invalid-feedback">Podaj nazwę listy</div>
+    </div>
+  
+    <label>Produkty</label>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary mb-2 mt-2" (click)="addProd()">Dodaj produkt</button>
+      <ul class="list-group">
+        <li formArrayName="products" *ngFor="let item of shoppingListForm.controls.products?.value; let i = index; trackBy:trackByFn" class="list-group-item">          
+          <div [formGroupName]="i">
+            <div class="row">
+                <div class="col-4">
+                  <input type="text" class="form-control mb-2" placeholder="nazwa" formControlName="name">
+                </div>
+                <div class="col-4">
+                  <input type="number" class="form-control mb-2" placeholder="ilość" formControlName="count">
+                </div>
+                <div class="col-3">
+                  <select formControlName="unit" class="form-control mb-2">
+                    <option disabled selected>wybierz</option>
+                    <option value=0>gramy</option>
+                    <option value=1>ilość</option>
+                    <option value=2>mililitry</option>
+                  </select>
+                </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      
+    </div> 
+    <div class="form-group text-center">
+      <button class="btn btn-success" type="submit" [disabled]="!shoppingListForm.valid">Dodaj listę</button>
+    </div> 
+  </form>
+  
+</div>

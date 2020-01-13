@@ -1,0 +1,19 @@
+.img-circle {
+    max-height: 50px;
+}
+
+table {
+    margin-top: 15px;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.btn-group {
+    width: 100%;
+}
+.addbtn {
+    max-width: 200px;
+    margin: auto;
+}

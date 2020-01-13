@@ -1,0 +1,21 @@
+.dropdown-toggle, .dropdown-item {
+  cursor: pointer;
+}
+
+img {
+  max-height: 40px;
+  display: inline;
+}
+.nav-link {
+  font-size: 17px;
+}
+
+.navbar-brand {
+  font-size: 23px;
+}
+
+.badge-notify{
+  background:red;
+  position:absolute;
+  top:0px;
+ }

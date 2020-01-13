@@ -1,0 +1,16 @@
+.collshead :hover {
+    color: rgb(114, 114, 114);
+    cursor: pointer;
+}
+
+.fa-check {
+    color: green;
+}
+
+.fa-times{
+    color: red;
+}
+
+.bought-count {
+    width: 80px;
+}

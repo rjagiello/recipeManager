@@ -1,0 +1,134 @@
+<div class="container">
+  <form class="center" [formGroup]="recipeForm" (ngSubmit)="AddRecipe()">
+    <h2 class="text-center text-primary">Dodaj przepis</h2>
+    <hr>
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div class="form-group">
+          <div class="row">
+            <label class="radio-inline col-3">
+              <p-radioButton name="group1" value="0" formControlName="category" label="Śniadanie"></p-radioButton>
+            </label>
+            <label class="radio-inline col-3">
+              <p-radioButton name="group1" value="1" formControlName="category" label="Obiad"></p-radioButton>
+            </label>
+            <label class="radio-inline col-3">
+              <p-radioButton name="group1" value="2" formControlName="category" label="Kolacja"></p-radioButton>
+            </label>
+            <label class="radio-inline col-3">
+              <p-radioButton name="group1" value="3" formControlName="category" label="Przekąski"></p-radioButton>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="name"><strong>Nazwa przepisu</strong></label>
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nazwa przepisu"
+            [ngClass]="{'is-invalid': recipeForm.get('name').errors && recipeForm.get('name').touched}">
+          <div class="invalid-feedback">Podaj nazwę przepisu</div>
+        </div>
+
+        <div class="form-group">
+          <label for="description"><strong>Opis przepisu</strong></label>
+          <input type="text" class="form-control" placeholder="Opis przepisu" name="description"
+            formControlName="description" [ngClass]="{'is-invalid': recipeForm.get('description').errors}">
+          <div class="invalid-feedback" *ngIf="recipeForm.get('description').hasError('maxlength')">
+            Opis nie może mieć więcej niż 40 znaków
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <label class="radio-inline col-4">
+              <p-radioButton name="group2" value=1 formControlName="portions" label="1 porcja"></p-radioButton>
+            </label>
+            <label class="radio-inline col-4">
+              <p-radioButton name="group2" value=2 formControlName="portions" label="2 porcje"></p-radioButton>
+            </label>
+            <label class="radio-inline col-4">
+              <p-radioButton name="group2" value=4 formControlName="portions" label="4 porcje"></p-radioButton>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-5">
+        <p-card header="Składniki">
+          <ul class="list-group">
+            <li *ngFor="let item of products" class="list-group-item">
+              <div class="row">
+                <div class="col-10">
+                  {{item.name}}<p class="float-right">{{item.count}} {{item.unit | unit}}</p>
+                </div>
+                <div class="col-1">
+                  <button type="button" (click)="deleteProduct(item.name)" class="btn btn-warning btn-sm">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button type="button" (click)="openModal(template)" class="btn btn-primary mt-1">Dodaj produkt</button>
+        </p-card>
+      </div>
+      <div class="col-7">
+        <p-card header="Przygotowanie">
+          <div class="form-group">
+            <textarea rows="10" type="text" class="form-control" placeholder="Instrukcja przygotowania"
+              formControlName="preparation"
+              [ngClass]="{'is-invalid': recipeForm.get('preparation').errors && recipeForm.get('preparation').touched}"></textarea>
+            <div class="invalid-feedback">Podaj instrukcję przygotowania</div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <div class="form-group text-center">
+      <button class="btn btn-success" type="submit" [disabled]="!recipeForm.valid">Dodaj produkt</button>
+    </div>
+  </form>
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <form class="center" #productForm="ngForm" (ngSubmit)="productForm.valid && addProduct()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="text-center text-primary">Dodaj produkt</h2>
+        <hr>
+        <div class="ui-fluid mb-3">
+          <p-autoComplete type="text" placeholder="Nazwa produktu" [(ngModel)]="product.name" name="name"
+            [suggestions]="results" (completeMethod)="search($event)" required></p-autoComplete>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-4">
+              <input type="number" class="form-control" placeholder="Ilość" [(ngModel)]="product.count" name="count"
+                min="1" required>
+            </div>
+            <div class="col-8">
+              <select [(ngModel)]="product.unit" name="unit" class="form-control mb-2" required>
+                <option disabled selected>wybierz</option>
+                <option value=0>gramy</option>
+                <option value=1>ilość</option>
+                <option value=2>mililitry</option>
+                <option value=3>łyżki</option>
+                <option value=4>łyżeczki</option>
+                <option value=5>szklanki</option>
+                <option value=6>szczypty</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mt-1">
+          <button class="btn btn-primary" [disabled]="!productForm.valid">Dodaj</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+
+</div>

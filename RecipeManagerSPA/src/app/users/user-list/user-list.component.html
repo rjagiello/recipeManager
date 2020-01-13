@@ -1,0 +1,41 @@
+<div class="text-center mt-3">
+  <h2>{{followParam === 'userFollow' ? 'Zaprosznia do znajomych' : 'Twoi znajomi'}} 
+      : {{pagination.totalItems}}</h2>
+</div>
+
+<div class="container mt-3">
+
+  <div class="row justify-content-center">
+    <div class="btn-group">
+      <button class="btn btn-primary" [(ngModel)]="followParam" btnRadio="userFollow" (click)="loadUsers()">
+               Zaproszenia</button>
+      <button class="btn btn-primary" [(ngModel)]="followParam" btnRadio="userIsFollowed" (click)="loadUsers()">
+               Znajomi</button>
+      <button [routerLink]="['/znajomi/wyszukiwanie']" class="btn btn-success">Wyszukaj znajomych</button>
+
+    </div>
+  </div>
+  <br>
+  <div class="row justify-content-center mt-3 mb-5" *ngIf="users.length == 0 && followParam === 'userFollow'">
+    <h3>Brak zaproszeń</h3>
+  </div>
+  <div class="row justify-content-center mt-3 mb-5" *ngIf="users.length == 0 && followParam === 'userIsFollowed'">
+    <h3>Brak znajomych</h3>
+  </div>
+  <div class="row">
+    <div *ngFor="let user of users" class="col-sm-6 col-md-4 col-lg-4 col-xl-2">
+      <app-user-card [user]="user" [cardType]="cardType" (removeCard)="removeCard($event)"></app-user-card>
+    </div>
+  </div>
+
+</div>
+
+<div class="d-flex justify-content-center">
+  <pagination [boundaryLinks]="true" 
+              [totalItems]="pagination.totalItems" 
+              [itemsPerPage]="pagination.itemsPerPage" 
+              [(ngModel)]="pagination.currentPage"
+              (pageChanged)="pageChanged($event)" 
+              previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+  </pagination>
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+  <p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button (click)="openModal(template)" routerLinkActive="router-link-active" pButton type="button" label="Dodaj nową listę zakupów" icon="fa fa-plus" class="ui-button-success"></button>
+    </div>
+    
+    <div class="ui-toolbar-group-right">
+      <button [disabled]="shoppingLists.length === 0"  (click)="deleteAllLists()" pButton type="button" label="Usuń wszystkie listy" icon="fa fa-trash" class="ui-button-danger"></button>
+    </div>
+  </p-toolbar>
+  <div *ngIf="shoppingLists.length === 0" class="row justify-content-center">
+    <h1>Brak listy zakupów</h1>
+  </div>
+  <div *ngFor="let item of shoppingLists" class="mt-3">
+    <app-shopping-card [shoppingList]="item" (removeShoppingListCard)="removeShoppingCard($event)"></app-shopping-card>
+  </div>
+  <br>
+  <div *ngIf="shoppingLists.length > 0" class="row justify-content-center mb-3">
+    <h3>Razem</h3>
+  </div>
+  <div class="row justify-content-center mb-3">
+    <div class="col-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Produkt</th>
+            <th scope="col">Ilość w lodówce</th>
+            <th scope="col">Ilość</th>
+            <th scope="col">Jednostka</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="collshead" *ngFor="let item of products;let i = index;">
+            <th scope="row">
+              {{item.name}}</th>
+            <td>{{item.fridgeCount}} {{item.unit | unit}}</td>
+            <td>{{item.count}}</td>
+            <td>{{item.unit | unit}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #template>
+  <app-shopping-add (hideModal)="hideModal($event)" ></app-shopping-add>
+</ng-template>

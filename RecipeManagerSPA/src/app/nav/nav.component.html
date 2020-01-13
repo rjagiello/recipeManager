@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <div class="container">
+  <a *ngIf="!loggedIn()" class="navbar-brand" [routerLink]="['/home']">Przepisowo</a>
+  <a *ngIf="loggedIn()" class="navbar-brand" [routerLink]="['/przepisy']">Przepisowo</a>
+  <ul *ngIf="loggedIn()" class="navbar-nav ">
+    <li class="nav-item" routerLinkActive="router-link-active">
+      <a class="nav-link" [routerLink]="['/przepisy']" >Przepisy</a>
+      </li>
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a class="nav-link"[routerLink]="['/zakupy']">Zakupy</a>
+      </li>
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a class="nav-link" [routerLink]="['/lodowka']">Lodówka</a>
+      </li>
+    </ul>
+
+    <div *ngIf="loggedIn()" class="dropdown" dropdown >
+      <span class="mr-2">
+        <img src="{{photoUrl || '../../../../assets/user.png'}}">
+      </span>
+      <a class="dropdown-toggle text-light" dropdownToggle >
+        Witaj {{ authService.decodedToken?.unique_name | titlecase }}
+      </a>
+      <span *ngIf="isNoti" class="badge badge-notify">1</span>
+
+      <div class="dropdown-menu mt-4" *dropdownMenu>
+        <a class="dropdown-item" [routerLink]="['/uzytkownik/edycja']" ><i class="fa fa-pencil"></i> Edytuj profil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" [routerLink]="['/znajomi']" ><i class="fa fa-user"></i> Znajomi</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="logOut()"><i class="fa fa-sign-out"></i> Wyloguj</a>
+      </div>
+    </div>
+
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline mt-2 mt-md-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="text" placeholder="Użytkownik" [(ngModel)]="model.username" name="username" required>
+      <input class="form-control mr-sm-2" type="password" placeholder="Hasło" [(ngModel)]="model.password" name="password" required>
+      <button [disabled]="!loginForm.valid" class="btn btn-outline-success my-2 my-sm-0" type="submit">Zaloguj</button>
+    </form>
+  </div>
+</nav>
+
+      
+
+  
+  

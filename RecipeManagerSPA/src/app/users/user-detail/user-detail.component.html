@@ -1,0 +1,71 @@
+<div class="container mt-3">
+  <div class="row">
+    <h1>Profil {{user.userName}}</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{ user.photoUrl || '../../../../../assets/user.png'}}" alt="{{ user.userName }}" />
+        <div class="card-body">
+        </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+            <button class="btn btn-danger w-100" (click)="deleteFriendShip()">Usuń ze znajomych</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="container mt-2">
+        <div class="row">
+          <div class="btn-group">
+            <button class="btn btn-dark" 
+                    [(ngModel)]="category" 
+                    btnRadio="0" 
+                    (click)="loadRecipes()">
+              Śniadanie
+            </button>
+            <button class="btn btn-dark" 
+                    [(ngModel)]="category" 
+                    btnRadio="1" 
+                    (click)="loadRecipes()">
+              Obiad
+            </button>
+            <button class="btn btn-dark" 
+                    [(ngModel)]="category" 
+                    btnRadio="2" 
+                    (click)="loadRecipes()">
+              Kolacja
+            </button>
+            <button class="btn btn-dark" 
+                    [(ngModel)]="category" 
+                    btnRadio="3" 
+                    (click)="loadRecipes()">
+              Przekąski
+            </button>
+          </div>
+        </div>
+      
+        <div class="row justify-content-center mt-3 mb-5" *ngIf="recipes?.length === 0">
+          <h3>Brak przepisów</h3>
+        </div>
+      
+        <div class="row mt-3">
+          <div *ngFor="let item of recipes" class="col-lg-4 col-md-8 col-sm-12">
+            <app-recipe-card [cardType]="cardType" [recipe]="item"></app-recipe-card>
+          </div>
+        </div>      
+      </div>
+      
+      <div class="d-flex justify-content-center">
+          <pagination [boundaryLinks]="true"
+                      [totalItems]="pagination.totalItems"
+                      [itemsPerPage]="pagination.itemsPerPage"
+                      [(ngModel)]="pagination.currentPage"
+                      (pageChanged)="pageChanged($event)"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>

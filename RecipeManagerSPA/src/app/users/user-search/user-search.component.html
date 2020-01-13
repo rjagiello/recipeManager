@@ -1,0 +1,16 @@
+<div class="text-center mt-3">
+  <p-autoComplete (keyup.enter)="getUser()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
+</div>
+
+
+
+<div class="container mt-3">
+  <br>
+
+  <div class="row justify-content-center mt-3 mb-5">
+    <div class="col-3">
+      <app-user-card *ngIf="user != null"[cardType]="cardType"  [user]="user"></app-user-card>
+    </div>
+  </div>
+
+</div>

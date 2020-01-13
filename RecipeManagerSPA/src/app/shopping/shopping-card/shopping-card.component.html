@@ -1,0 +1,52 @@
+<div class="row justify-content-center mb-2">
+  <div class="col-8">
+    <div class="well well-lg card card-block card-header collshead">
+      <a (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">{{shoppingList.name}}
+      </a>
+    </div>
+    <div id="collapseBasic" [collapse]="isCollapsed" [isAnimated]="true">
+      <div class="well well-lg card card-block card-header">
+        <div *ngIf="shoppingList.products.length === 0" class="row justify-content-center">
+          <h4>Posiadasz wszystkie produkty w lodówce</h4>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Produkt</th>
+              <th scope="col">Ilość w lodówce</th>
+              <th scope="col">Ilość kupiona</th>
+              <th scope="col">Ilość</th>
+              <th scope="col">Jednostka</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="collshead" *ngFor="let item of shoppingList.products;let i = index;">
+              <th scope="row">
+                <a (click)="item.isInFridge = !item.isInFridge"><i *ngIf="item.isInFridge" class="fa fa-check" ></i><i *ngIf="!item.isInFridge" class="fa fa-times" ></i>  {{item.name}}</a></th>
+              <td>{{item.fridgeCount}} {{item.unit | unit}}</td>
+              <td><input class="bought-count" [disabled]="!item.isInFridge" type="number" [(ngModel)]="shoppingList.products[i].boughtCount"> {{item.unit | unit}}</td>
+              <td>{{item.count}}</td>
+              <td>{{item.unit | unit}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- <ul class="list-group list-group-flush">
+          <li  class="list-group-item collshead" *ngFor="let item of shoppingList.products;let i = index;">
+            <a (click)="item.isInFridge = !item.isInFridge">
+              <i *ngIf="item.isInFridge" class="fa fa-check" ></i><i *ngIf="!item.isInFridge" class="fa fa-times" ></i> 
+            {{item.name}} <p class="float-right">{{item.count}} {{item.unit | unit}} </p>
+          </a>
+          <input class="bought-count" [disabled]="!item.isInFridge" type="number" [(ngModel)]="shoppingList.products[i].boughtCount"> {{item.unit | unit}}  
+          W lodówce: {{item.fridgeCount}}
+          </li>
+        </ul> -->
+        <div class="btn-group d-flex">
+          <button type="button" class="btn btn-success" (click)="finishShopping()">Zakończ zakupy</button>
+          <button type="button" class="btn btn-danger" (click)="deleteShoppingList()">Usuń listę</button>
+        </div>     
+      </div>
+    </div>
+  </div>
+</div>

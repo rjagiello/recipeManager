@@ -1,0 +1,82 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-sm-4">
+        <h1>Twój profil - Edycja</h1>
+    </div>
+    <div class="col-sm-8">
+      <div *ngIf="editForm.dirty" class="alert alert-info">
+        <strong>Informacja: </strong> Dokonałeś zmian. Wszelkie nie zapisane zmiany zostaną utracone!
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{ photoUrl || '../../../../../assets/user.png'}}" alt="{{ user.userName }}" />
+        <div class="card-body">
+        </div>
+        <div class="card-footer">
+            <button type="submit" form="editForm" [disabled]="!editForm.valid || !editForm.dirty" class="btn btn-success btn-block">Zapisz zmiany</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <form [formGroup]="editForm" id="editForm" (ngSubmit)="updateUser()">
+      <div class="tab-panel">
+        <tabset class="user-tabset">
+          <tab heading="Dane">
+            <h5>Nazwa użytkownika</h5>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Nazwa użytkownika" formControlName="username"
+                [ngClass]="{'is-invalid': editForm?.get('username').errors && editForm?.get('username').touched}">
+              <div class="invalid-feedback">Podaj nazwę użytkownika</div>
+            </div>
+            <h5> E-mail</h5>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="E-mail" formControlName="email"
+                [ngClass]="{'is-invalid': editForm?.get('email').errors}">
+              <div class="invalid-feedback">Niepoprawny adres e-mail</div>
+            </div>
+          </tab>
+          <tab heading="Zdjęcie">
+            <app-photo (getUserPhotoChange)="updateMainPhoto($event)"></app-photo>
+          </tab>
+          <tab heading="Hasło">
+            <h5> Nowe hasło</h5>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Hasło" formControlName="password"
+                [ngClass]="{'is-invalid': editForm?.get('password').errors && editForm?.get('password').touched}">
+              <div class="invalid-feedback"
+                *ngIf="editForm?.get('password').hasError('required') && editForm?.get('password').touched">
+                Hasło jest wymagane
+              </div>
+              <div class="invalid-feedback"
+                *ngIf="editForm?.get('password').hasError('minlength') && editForm?.get('password').touched">
+                Hasło nie może mieć mniej niż 6 znaki
+              </div>
+              <div class="invalid-feedback"
+                *ngIf="editForm?.get('password').hasError('maxlength') && editForm?.get('password').touched">
+                Hasło nie może mieć więcej niż 20 znaków
+              </div>
+            </div>
+            <h5> Powtórz nowe hasło</h5>
+            <div class="form-group">
+              <input type="password" class="form-control" placeholder="Potwierdź hasło" formControlName="confirmPassword"
+                [ngClass]="{'is-invalid': editForm?.get('confirmPassword').errors && editForm?.get('confirmPassword').touched
+                                  || editForm?.get('confirmPassword').touched && editForm?.hasError('missmatch')}">
+              <div class="invalid-feedback"
+                *ngIf="editForm?.get('confirmPassword').hasError('required') && editForm?.get('confirmPassword').touched">
+                Potwierdzenie hasła jest wymagane
+              </div>
+              <div class="invalid-feedback"
+                *ngIf="editForm?.hasError('missmatch') && editForm?.get('confirmPassword').touched">
+                Hasła muszą być takie same
+              </div>
+            </div>
+          </tab>
+        </tabset>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

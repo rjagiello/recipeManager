@@ -1,0 +1,41 @@
+<div class="card mb-4">
+
+  <div class="card-body p-2">
+    <h6 class="card-title text-center mb-1"><i class="fa fa-user"></i>
+      {{user.userName}}
+    </h6>
+  </div>
+  <div class="card-img-wrapper">
+    <img src="{{user.photoUrl || '../../../../../assets/user.png'}}" class="card-img-top" alt="{{user.userName}}">
+    <ul class="list-inline text-center user-icons animate">
+      <li *ngIf="isInviteType()" class="list-inline-item">
+        <button tooltip="Akceptuj"
+        placement="top" type="button" class="btn btn-warning btn-sm" (click)="acceptInvite()">
+          <i class="fa fa-check"></i>
+        </button>
+      </li>
+      <li *ngIf="isInviteType()" class="list-inline-item">
+        <button tooltip="Odrzuć"
+        placement="top" type="button" class="btn btn-warning btn-sm" (click)="deleteFriend()">
+          <i class="fa fa-times"></i>
+        </button>
+      </li>
+      <li *ngIf="isSearchType()" class="list-inline-item">
+        <button tooltip="Zaproś"
+        placement="top" type="button" class="btn btn-warning btn-sm" (click)="sendInvite()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </li>
+      <li *ngIf="isFriendsType()" class="list-inline-item">
+        <button tooltip="Zobacz profil"
+        placement="top" class="btn btn-warning btn-sm" [routerLink]="['/uzytkownicy/', user.id]" routerLinkActive="router-link-active" >
+          <i class="fa fa-user"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card-body p-0">
+    <p class="card-text text-center text-muted"></p>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="card mb-4">
+
+  <div class="card-body p-2">    
+    <h6 class="card-title text-center mb-1">
+      {{recipe.name}}
+    </h6>
+  </div>
+  <div class="card-img-wrapper">
+    <img src="{{recipe.photoUrl || '../../../../../assets/food.png'}}" class="card-img-top" alt="{{recipe.name}}">
+    <ul class="list-inline text-center user-icons animate">
+      <li *ngIf="isMyType()" class="list-inline-item">
+        <button tooltip="Dodaj do zakupów"
+        placement="top" class="btn btn-dark btn-sm" (click)="addRecipeToShoppingList()">
+          <i class="fa fa-cart-plus"></i>
+        </button>
+      </li>
+      <li *ngIf="isMyType()" class="list-inline-item">
+        <button tooltip="Edytuj przepis"
+        placement="top" class="btn btn-dark btn-sm" [routerLink]="['/przepisy/edycja/', recipe.id]" routerLinkActive="router-link-active">
+          <i class="fa fa-pencil"></i>
+        </button>
+      </li>
+      <li class="list-inline-item">
+        <button tooltip="Zobacz przepis"
+        placement="top" class="btn btn-dark btn-sm" (click)="onRoute()" >
+          <i class="fa fa-cutlery"></i>
+        </button>
+      </li>
+      <li *ngIf="isMyType()" class="list-inline-item" (click)="deleteRecipe()">
+        <button tooltip="Usuń przepis"
+        placement="top" class="btn btn-dark btn-sm">
+          <i class="fa fa-trash"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card-body p-0 text-center">
+    <i *ngIf="recipe.isCompleteProducts && isMyType()" class="fa fa-check" 
+        tooltip="Posiadasz w lodówce wszystkie składniki"
+        placement="bottom"></i>
+  </div>
+</div>

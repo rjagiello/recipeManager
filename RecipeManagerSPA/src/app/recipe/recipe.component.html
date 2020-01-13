@@ -1,0 +1,59 @@
+<div class="container mt-2">
+  <p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button [routerLink]="['/przepisy/dodawanie']" routerLinkActive="router-link-active" pButton type="button" label="Dodaj nowy przepis" icon="fa fa-plus" class="ui-button-success"></button>
+    </div>
+    
+    <div class="ui-toolbar-group-right">
+      <p-autoComplete placeholder="Szukaj" (keyup.enter)="getRecipe()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
+    </div>
+  </p-toolbar>
+    <div class="row mt-3">
+      <div class="btn-group">
+        <button class="btn btn-dark"
+                [(ngModel)]="category" 
+                btnRadio="0" 
+                (click)="loadRecipes()">
+          Śniadanie
+        </button>
+        <button class="btn btn-dark"
+                [(ngModel)]="category" 
+                btnRadio="1" 
+                (click)="loadRecipes()">
+          Obiad
+        </button>
+        <button class="btn btn-dark"
+                [(ngModel)]="category" 
+                btnRadio="2" 
+                (click)="loadRecipes()">
+          Kolacja
+        </button>
+        <button class="btn btn-dark" 
+                [(ngModel)]="category" 
+                btnRadio="3" 
+                (click)="loadRecipes()">
+          Przekąski
+        </button>
+      </div>
+    </div>
+  
+    <div class="row justify-content-center mt-3 mb-5" *ngIf="recipes.length == 0">
+      <h3>Brak przepisów</h3>
+    </div>
+  
+    <div class="row mt-3" *ngIf="recipes.length > 0">
+        <div *ngFor="let item of recipes" class="col-lg-3 col-md-6 col-sm-9">
+            <app-recipe-card [cardType]="cardType" [recipe]="item" (removeRecipe)="removeRecipe($event)"></app-recipe-card>
+          </div>
+    </div>      
+  </div>
+  
+  <div class="d-flex justify-content-center">
+      <pagination [boundaryLinks]="true"
+                  [totalItems]="pagination.totalItems"
+                  [itemsPerPage]="pagination.itemsPerPage"
+                  [(ngModel)]="pagination.currentPage"
+                  (pageChanged)="pageChanged($event)"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  </div>

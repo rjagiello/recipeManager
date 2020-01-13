@@ -1,0 +1,123 @@
+<div class="container mt-2">
+  <p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button (click)="openModal(template)" pButton type="button" label="Dodaj produkt" icon="fa fa-plus" class="ui-button-success"></button>
+    </div>
+    
+    <div class="ui-toolbar-group-right">
+      <p-autoComplete placeholder="Szukaj" (keyup.enter)="getProduct()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
+    </div>
+  </p-toolbar>
+  <div class="row justify-content-center mt-3 mb-5" *ngIf="fridge.length == 0">
+    <h3>Pusta lodówka</h3>
+  </div>
+
+  <div class="row justify-content-center mt-3">
+    <div class="col-6">
+        <div *ngFor="let item of fridge">
+          <button (click)="openModal(templateEdit, item.id)" tooltip="Edytuj produkt" placement="top" class="btn btn-success btn-sm">
+            <i class="fa fa-pencil"></i>
+          </button> 
+          <button (click)="deleteProduct(item.id)" tooltip="Usuń produkt" placement="top" class="btn btn-warning btn-sm">
+            <i class="fa fa-trash"></i>
+          </button> 
+          {{item.name}}<p class="float-right">{{item.count}} {{item.unit | unit}}</p>
+          <hr>
+        </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-3">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+      [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+      nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+  </div>
+
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <form class="center" [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="text-center text-primary">Dodaj produkt</h2>
+        <hr>
+
+        <div class="ui-fluid mb-3">
+          <p-autoComplete type="text"  placeholder="Nazwa produktu" formControlName="name" [suggestions]="results" (completeMethod)="search($event)"
+          [ngClass]="{'is-invalid': productForm.get('name').errors && productForm.get('name').touched}"></p-autoComplete>
+          <div class="invalid-feedback">Podaj nazwę produktu</div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-4">
+              <input type="number" class="form-control" placeholder="Ilość" formControlName="count" min="1"
+                [ngClass]="{'is-invalid': productForm.get('count').errors && productForm.get('count').touched}">
+              <div class="invalid-feedback">Podaj ilość</div>
+            </div>
+            <div class="col-8">
+              <select formControlName="unit" class="form-control mb-2">
+                <option disabled selected>wybierz</option>
+                <option value=0>gramy</option>
+                <option value=1>ilość</option>
+                <option value=2>mililitry</option>
+                <option value=3>łyżki</option>
+                <option value=4>łyżeczki</option>
+                <option value=5>szklanki</option>
+                <option value=6>szczypty</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group text-center">
+          <button class="btn btn-success" type="submit" [disabled]="!productForm.valid">Dodaj produkt</button>
+        </div>
+      </form>
+
+    </div>
+  </ng-template>
+
+  <ng-template #templateEdit>
+    <div class="modal-body text-center">
+      <form class="center" [formGroup]="productForm" (ngSubmit)="editProduct()">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="text-center text-primary">Edytuj produkt</h2>
+        <hr>
+
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Nazwa produktu" formControlName="name"
+            [ngClass]="{'is-invalid': productForm.get('name').errors && productForm.get('name').touched}">
+          <div class="invalid-feedback">Podaj nazwę produktu</div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-4">
+              <input type="number" class="form-control" placeholder="Ilość" formControlName="count" min="1"
+                [ngClass]="{'is-invalid': productForm.get('count').errors && productForm.get('count').touched}">
+              <div class="invalid-feedback">Podaj ilość</div>
+            </div>
+            <div class="col-8">
+              <select formControlName="unit" class="form-control mb-2">
+                <option disabled selected>wybierz</option>
+                <option value=0>gramy</option>
+                <option value=1>ilość</option>
+                <option value=2>mililitry</option>
+                <option value=3>łyżki</option>
+                <option value=4>łyżeczki</option>
+                <option value=5>szklanki</option>
+                <option value=6>szczypty</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group text-center">
+          <button class="btn btn-success" type="submit" [disabled]="!productForm.valid">Zapisz</button>
+        </div>
+      </form>
+
+    </div>
+  </ng-template>

@@ -1,0 +1,48 @@
+<div class="container mt-3 mb-3">
+  <div class="row">
+    <div class="cnt">
+      <h1>{{recipe.name}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cnt">
+      <div>
+        <img class="img" src="{{ recipe.photoUrl  || '../../../../../assets/food.png'}}" alt="{{ recipe.name }}" />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cnt">
+      <p>{{recipe.description}}</p>
+    </div>
+  </div>
+  <hr>
+  <div class="row mb-4">
+    <div class="col-4">
+    <p-card header="Składniki na {{recipe.portions}} porcje">
+      <ul class="list-group">
+        <li *ngFor="let item of recipe.products" class="list-group-item">
+          {{item.name}}<p class="float-right">{{item.count}} {{item.unit | unit}}</p>
+        </li>
+      </ul>
+    </p-card>
+    </div>
+    <div class="col-8">
+      <p-card header="Przygotowanie">
+        <p class="preparation">{{recipe.preparation}}</p>
+      </p-card>     
+    </div>
+  </div>
+  
+  <p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <button *ngIf="isMyType()" [routerLink]="['/przepisy/edycja/', recipe.id]" routerLinkActive="router-link-active" pButton type="button" label="Edytuj" icon="fa fa-pencil" class="mr-2"></button>
+        <button *ngIf="isMyType()" (click)="addRecipeToShoppingList()" pButton type="button" label="Dodaj do listy zakupów" icon="fa fa-cart-plus" class="ui-button-success"></button>
+        <button *ngIf="isFriendType()" (click)="addToMyRecipes()" pButton type="button" label="Dodaj do moich przepisów" icon="fa fa-cart-plus" class="ui-button-success"></button>
+    </div>
+    
+    <div class="ui-toolbar-group-right">
+        <button *ngIf="isMyType()" (click)="deleteRecipe()" pButton type="button" label="Usuń" icon="fa fa-trash" class="ui-button-danger"></button>
+    </div>
+  </p-toolbar>
+</div>
