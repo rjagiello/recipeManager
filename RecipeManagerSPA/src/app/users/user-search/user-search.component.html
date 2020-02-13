@@ -1,5 +1,5 @@
 <div class="text-center mt-3">
-  <p-autoComplete (keyup.enter)="getUser()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
+  <p-autoComplete (onSelect)="getUser()" (keyup.enter)="getUser()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
 </div>
 
 

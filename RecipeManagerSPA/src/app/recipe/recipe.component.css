@@ -17,3 +17,6 @@ td {
     max-width: 200px;
     margin: auto;
 }
+.my-four-options-selectbutton .ui-selectbutton .ui-button {
+    width: 25%;
+  }

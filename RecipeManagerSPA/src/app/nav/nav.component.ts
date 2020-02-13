@@ -15,6 +15,7 @@ export class NavComponent implements OnInit {
 
   model: any = {};
   photoUrl: string;
+  userName: string;
   isNoti = false;
   hubConnection: HubConnection;
   jwtToken: string;
@@ -27,6 +28,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+    this.authService.currentUserName.subscribe(userName => this.userName = userName);
     this.authService.currentNoti.subscribe(noti => this.isNoti = noti);
     if (this.loggedIn()) {
       this.connectToHub();

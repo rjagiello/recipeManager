@@ -27,23 +27,28 @@ export class ShoppingAddComponent implements OnInit {
 
   createShoppingListForm() {
     this.shoppingListForm = this.fb.group({
-      name: ['', Validators.required],
-      products: new FormArray ([])
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      products: new FormArray ([], Validators.required)
     });
   }
 
   addProd() {
     const creds = this.shoppingListForm.controls.products as FormArray;
     creds.push(this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(30)]],
       count: ['', Validators.required],
       unit: ['', Validators.required]
     }));
   }
 
+  deleteProd(index: number) {
+    const creds = this.shoppingListForm.controls.products as FormArray;
+    creds.removeAt(index);
+  }
+
   trackByFn(index: any, item: any) {
     return index;
- }
+  }
 
   addShoppingList() {
     this.shoppingList = Object.assign({}, this.shoppingListForm.value);

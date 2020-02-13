@@ -3,9 +3,11 @@
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 @import '../node_modules/alertifyjs/build/css/alertify.min.css';
 @import '../node_modules/alertifyjs/build/css/themes/bootstrap.min.css';
-@import '../node_modules/bootswatch/dist/cosmo/bootstrap.min.css';
+@import '../node_modules/bootswatch/dist/flatly/bootstrap.min.css';
 @import '../node_modules/primeng/resources/themes/nova-light/theme.css';
 @import '../node_modules/primeng/resources/primeng.min.css';
+
+
 .tab-panel {
     border: 1px solid #ddd;
     padding: 10px;
@@ -46,4 +48,8 @@
     border: 0;
     border-top: 1px solid #eee;
     padding: 15px 0;
+  }
+
+  .btn {
+    border-radius: 4px;
   }

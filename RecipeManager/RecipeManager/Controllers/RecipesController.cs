@@ -79,6 +79,11 @@ namespace RecipeManager.Controllers
 			if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
 				return Unauthorized();
 
+			var myRecipe = await _repo.SearchObjects(userId, addRecipeDto.Name);
+
+			if (myRecipe.Count > 0)
+				return BadRequest($"Posiadasz już przepis na {addRecipeDto.Name}");
+
 			var recipeToCreate = _mapper.Map<Recipe>(addRecipeDto);
 
 			recipeToCreate = await _productSvc.SetCompleteAddedorEditedRecipe(userId, recipeToCreate);

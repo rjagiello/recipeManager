@@ -37,6 +37,7 @@ export class RecipeAddComponent implements OnInit {
 
   ngOnInit() {
     this.createRecipeForm();
+    console.log(this.products.length);
   }
 
   openModal(template: TemplateRef<any>) {
@@ -45,10 +46,10 @@ export class RecipeAddComponent implements OnInit {
 
   createRecipeForm() {
     this.recipeForm = this.fb.group({
-      name: ['', Validators.required],
-      description: ['', Validators.maxLength(40)],
+      name: ['', [Validators.required, Validators.maxLength(50)]],
+      description: ['', Validators.maxLength(80)],
       category: ['0'],
-      preparation: ['', Validators.required],
+      preparation: ['', [Validators.required, Validators.maxLength(2000)]],
       portions: ['1']
     });
   }

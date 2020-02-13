@@ -27,7 +27,7 @@ export class UnitPipe implements PipeTransform {
                 unit = 'szklanki';
                 break;
             case 6:
-                unit = 'szczypta';
+                unit = 'szczypty';
                 break;
             // tslint:disable-next-line:quotemark
             case "0":
@@ -55,7 +55,7 @@ export class UnitPipe implements PipeTransform {
                 break;
             // tslint:disable-next-line:quotemark
             case "6":
-                unit = 'szczypta';
+                unit = 'szczypty';
                 break;
             default:
                 unit = 'jednostek';

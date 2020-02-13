@@ -82,7 +82,8 @@ namespace RecipeManager.Controllers
 
 			_mapper.Map(userForUpdateDto, userFromRepo);
 
-			_authRepo.SetHashPassword(userFromRepo, userForUpdateDto.Password);
+			if(!string.IsNullOrEmpty(userForUpdateDto.Password))
+				_authRepo.SetHashPassword(userFromRepo, userForUpdateDto.Password);
 
 			if (await _repo.SaveAll())
 				return NoContent();
@@ -99,8 +100,15 @@ namespace RecipeManager.Controllers
 			var friendship = await _repo.GetFriensShip(id, recipientId);
 			var friendshipMe = await _repo.GetFriensShip(recipientId, id);
 
-			if (friendship != null || friendshipMe != null)
-				return BadRequest("Juz obserwujesz tego uzytkownika");
+			if((friendship != null && friendship.IsAccepted) ||
+				(friendshipMe != null && friendshipMe.IsAccepted))
+				return BadRequest("Jesteście już znajomymi");
+
+			if (friendship != null && !friendship.IsAccepted)
+				return BadRequest("Juz wysłałeś zaproszenie do tego użytkownika");
+
+			if (friendshipMe != null && !friendshipMe.IsAccepted)
+				return BadRequest("Użytkownik wysłał Ci zaproszenie");
 
 			if (await _repo.GetUser(recipientId) == null)
 				return NotFound();

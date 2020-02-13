@@ -13,12 +13,14 @@ export class AuthService {
 
   baseUrl = environment.apiUrl + 'auth/';
   photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  userName = new BehaviorSubject<string>('Użytkowniku');
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User;
   noti = new BehaviorSubject<boolean>(false);
   currentPhotoUrl = this.photoUrl.asObservable();
   currentNoti = this.noti.asObservable();
+  currentUserName = this.userName.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -28,6 +30,10 @@ export class AuthService {
 
   changeNotifi(isInvite: boolean) {
     this.noti.next(isInvite);
+  }
+
+  changeUserName(userName: string) {
+    this.userName.next(userName);
   }
 
   login(model: any) {
@@ -40,6 +46,7 @@ export class AuthService {
         this.decodedToken = this.jwtHelper.decodeToken(user.token);
         this.currentUser = user.user;
         this.changeUserPhoto(this.currentUser.photoUrl);
+        this.changeUserName(this.currentUser.userName);
       }
     }));
   }

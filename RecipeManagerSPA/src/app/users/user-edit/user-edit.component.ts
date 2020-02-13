@@ -39,7 +39,7 @@ export class UserEditComponent implements OnInit {
 
   createEditForm() {
     this.editForm = this.fb.group({
-      username: [this.user.userName, Validators.required],
+      userName: [this.user.userName, [Validators.required, Validators.maxLength(20)]],
       email: [this.user.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
       password: ['', [Validators.minLength(6), Validators.maxLength(20)]],
       confirmPassword: ['', ]
@@ -57,7 +57,12 @@ export class UserEditComponent implements OnInit {
       this.userService.updateUser(this.authService.decodedToken.nameid, this.user)
         .subscribe(next => {
           this.alertify.success('Profil zaktualizowany');
+          this.authService.changeUserName(this.user.userName);
+          this.authService.currentUser.userName = this.user.userName;
+          localStorage.setItem('user', JSON.stringify(this.authService.currentUser));
           this.editForm.reset(this.user);
+          this.editForm.get('password').setValue(null);
+          this.editForm.get('confirmPassword').setValue(null);
         }, error => {
           this.alertify.error(error);
         });

@@ -3,13 +3,13 @@
         <hr>
   <div class="row">
     <div class="cnt">
-      <div>
+      <p-card>
         <img class="img" src="{{ recipe.photoUrl  || '../../../../../assets/food.png'}}" alt="{{ recipe.name }}" />
-      </div>
+      </p-card>
     </div>
   </div>
   <div class="row justify-content-center">
-    <div class="col-6 mb-3">
+    <div class="col-6 mb-3 mt-2">
       <p-accordion>
         <p-accordionTab header="Edytuj zdjęcie">
           <app-photo (getPhotoChange)="updatePhoto($event)" [recipeId]="recipe.id" [edit] = "true"></app-photo>
@@ -42,7 +42,13 @@
           <label for="name"><strong>Nazwa przepisu</strong></label>
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nazwa przepisu"
             [ngClass]="{'is-invalid': recipeForm.get('name').errors && recipeForm.get('name').touched}">
-          <div class="invalid-feedback">Podaj nazwę przepisu</div>
+            <div class="invalid-feedback"
+              *ngIf="recipeForm.get('name').hasError('required') && recipeForm.get('name').touched">
+              Podaj nazwę przepisu</div>
+            <div class="invalid-feedback"
+              *ngIf="recipeForm.get('name').hasError('maxlength') && recipeForm.get('name').touched">
+              Nazwa nie może mieć więcej niż 50 znaków
+            </div>
         </div>
 
         <div class="form-group">
@@ -50,7 +56,7 @@
           <input type="text" class="form-control" placeholder="Opis przepisu" name="description"
             formControlName="description" [ngClass]="{'is-invalid': recipeForm.get('description').errors}">
           <div class="invalid-feedback" *ngIf="recipeForm.get('description').hasError('maxlength')">
-            Opis nie może mieć więcej niż 40 znaków
+            Opis nie może mieć więcej niż 80 znaków
           </div>
         </div>
 
@@ -96,14 +102,20 @@
             <textarea rows="10" type="text" class="form-control" placeholder="Instrukcja przygotowania"
               formControlName="preparation"
               [ngClass]="{'is-invalid': recipeForm.get('preparation').errors && recipeForm.get('preparation').touched}"></textarea>
-            <div class="invalid-feedback">Podaj instrukcję przygotowania</div>
+            <div class="invalid-feedback"
+              *ngIf="recipeForm.get('preparation').hasError('required') && recipeForm.get('preparation').touched">
+              Podaj instrukcję przygotowania</div>
+            <div class="invalid-feedback"
+              *ngIf="recipeForm.get('preparation').hasError('maxlength') && recipeForm.get('preparation').touched">
+              Instrukcja nie może mieć więcej niż 2000 znaków
+            </div>
           </div>
         </p-card>
       </div>
     </div>
 
     <div class="form-group text-center">
-      <button class="btn btn-success" type="submit" [disabled]="!recipeForm.valid">Zapisz</button>
+      <button class="btn btn-success" type="submit" [disabled]="!(recipeForm.valid && products.length > 0)">Zapisz</button>
     </div>
   </form>
 
@@ -117,7 +129,7 @@
         <hr>
         <div class="ui-fluid mb-3">
           <p-autoComplete type="text" placeholder="Nazwa produktu" [(ngModel)]="product.name" name="name"
-            [suggestions]="results" (completeMethod)="search($event)" required></p-autoComplete>
+            [suggestions]="results" (completeMethod)="search($event)" maxlength="30" required></p-autoComplete>
         </div>
         <div class="form-group">
           <div class="row">

@@ -16,6 +16,7 @@ import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import {AccordionModule} from 'primeng/accordion';
 import {FieldsetModule} from 'primeng/fieldset';
+import {SelectButtonModule} from 'primeng/selectbutton';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -61,6 +62,7 @@ import { LoadingComponent } from 'src/app/loading/loading.component';
 import { LoaderService } from './_services/loader.service';
 import { LoaderInterceptor } from './_services/loader.interceptor';
 import { ReminPasswordComponent } from './register/remin-password/remin-password.component';
+import { WindowRef } from './_services/window.service';
 
 export function tokenGetter() {
    return localStorage.getItem('token');
@@ -124,7 +126,8 @@ export function tokenGetter() {
       ButtonModule,
       InputTextModule,
       AccordionModule,
-      FieldsetModule
+      FieldsetModule,
+      SelectButtonModule
    ],
    providers: [
       AuthService,
@@ -136,6 +139,7 @@ export function tokenGetter() {
       LoaderService,
       { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
       AuthGuard,
+      WindowRef,
       PreventUnsavedChanges,
       ErrorInterceptorProvider,
       UserDetailResolver,

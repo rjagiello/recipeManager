@@ -70,7 +70,7 @@ namespace RecipeManager.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddHours(12),
+                Expires = DateTime.Now.AddHours(24),
                 SigningCredentials = creds
             };
 

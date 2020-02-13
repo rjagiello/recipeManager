@@ -48,13 +48,13 @@ export class FridgeComponent implements OnInit {
     if (product) {
       this.productForm = this.fb.group({
         id: [product.id, Validators.required],
-        name: [product.name, Validators.required],
+        name: [product.name, [Validators.required, Validators.maxLength(30)]],
         unit: [product.unit, Validators.required],
         count: [product.count, Validators.required]
       });
     } else {
       this.productForm = this.fb.group({
-        name: ['', Validators.required],
+        name: ['', [Validators.required, Validators.maxLength(30)]],
         unit: [0, Validators.required],
         count: [1, Validators.required]
       });

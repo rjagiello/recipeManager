@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="col-sm-4">
-        <h1>Twój profil - Edycja</h1>
+      <h1 class="ml-1">Twój profil - Edycja</h1>
     </div>
     <div class="col-sm-8">
       <div *ngIf="editForm.dirty" class="alert alert-info">
@@ -27,9 +27,16 @@
           <tab heading="Dane">
             <h5>Nazwa użytkownika</h5>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Nazwa użytkownika" formControlName="username"
-                [ngClass]="{'is-invalid': editForm?.get('username').errors && editForm?.get('username').touched}">
-              <div class="invalid-feedback">Podaj nazwę użytkownika</div>
+              <input type="text" class="form-control" placeholder="Nazwa użytkownika" formControlName="userName"
+                [ngClass]="{'is-invalid': editForm?.get('userName').errors && editForm?.get('userName').touched}">
+              <div class="invalid-feedback"
+                *ngIf="editForm.get('userName').hasError('required') && editForm.get('userName').touched">
+                Podaj nazwę użytkownika
+              </div>
+              <div class="invalid-feedback"
+                *ngIf="editForm.get('userName').hasError('maxlength') && editForm.get('userName').touched">
+                Nazwa użytkownika nie może mieć więcej niż 20 znaków
+              </div>
             </div>
             <h5> E-mail</h5>
             <div class="form-group">

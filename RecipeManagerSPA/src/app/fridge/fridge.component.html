@@ -46,7 +46,13 @@
         <div class="ui-fluid mb-3">
           <p-autoComplete type="text"  placeholder="Nazwa produktu" formControlName="name" [suggestions]="results" (completeMethod)="search($event)"
           [ngClass]="{'is-invalid': productForm.get('name').errors && productForm.get('name').touched}"></p-autoComplete>
-          <div class="invalid-feedback">Podaj nazwę produktu</div>
+          <div class="invalid-feedback"
+            *ngIf="productForm.get('name').hasError('required') && productForm.get('name').touched">
+            Podaj nazwę produktu</div>
+          <div class="invalid-feedback"
+            *ngIf="productForm.get('name').hasError('maxlength') && productForm.get('name').touched">
+              Nazwa nie może mieć więcej niż 30 znaków
+          </div>
         </div>
         <div class="form-group">
           <div class="row">

@@ -1,3 +1,6 @@
-<app-nav></app-nav>
-<router-outlet></router-outlet>
+<app-nav *ngIf="!isIE"></app-nav>
+<router-outlet *ngIf="!isIE"></router-outlet>
 <app-loading></app-loading>
+<div *ngIf="isIE">
+    <p>Użyj chrome</p>
+</div>

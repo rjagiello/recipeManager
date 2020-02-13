@@ -6,6 +6,7 @@ import { AlertifyService } from '../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { Pagination, PaginationResult } from '../_models/pagination';
 import { RecipeCardEnum } from '../_enums/recipeCard';
+import { SelectItem } from 'primeng/api/primeng-api';
 
 @Component({
   selector: 'app-recipe',
@@ -21,10 +22,17 @@ export class RecipeComponent implements OnInit {
   cardType: RecipeCardEnum = RecipeCardEnum.My;
   text: string;
   results: string[];
+  types: SelectItem[];
 
   constructor(private recipeService: RecipeService,
               private alertify: AlertifyService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+    this.types = [];
+    this.types.push({label: 'Śniadanie', value: 0, icon: 'fa fa-fw fa-cc-paypal'});
+    this.types.push({label: 'Obiad', value: 1, icon: 'fa fa-fw fa-cc-visa'});
+    this.types.push({label: 'Kolacja', value: 2, icon: 'fa fa-fw fa-cc-mastercard'});
+    this.types.push({label: 'Przekąski', value: 3, icon: 'fa fa-fw fa-cc-mastercard'});
+  }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

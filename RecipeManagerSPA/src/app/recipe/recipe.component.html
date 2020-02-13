@@ -8,27 +8,30 @@
       <p-autoComplete placeholder="Szukaj" (keyup.enter)="getRecipe()" [(ngModel)]="text" [suggestions]="results" (completeMethod)="search($event)"></p-autoComplete>
     </div>
   </p-toolbar>
+  <!-- <div class="row justify-content-center mt-3">
+      <p-selectButton [options]="types" [(ngModel)]="category" (onChange)="loadRecipes()"></p-selectButton>
+  </div> -->
     <div class="row mt-3">
       <div class="btn-group">
-        <button class="btn btn-dark"
+        <button class="btn btn-success"
                 [(ngModel)]="category" 
                 btnRadio="0" 
                 (click)="loadRecipes()">
           Śniadanie
         </button>
-        <button class="btn btn-dark"
+        <button class="btn btn-success"
                 [(ngModel)]="category" 
                 btnRadio="1" 
                 (click)="loadRecipes()">
           Obiad
         </button>
-        <button class="btn btn-dark"
+        <button class="btn btn-success"
                 [(ngModel)]="category" 
                 btnRadio="2" 
                 (click)="loadRecipes()">
           Kolacja
         </button>
-        <button class="btn btn-dark" 
+        <button class="btn btn-success" 
                 [(ngModel)]="category" 
                 btnRadio="3" 
                 (click)="loadRecipes()">
@@ -48,7 +51,7 @@
     </div>      
   </div>
   
-  <div class="d-flex justify-content-center">
+  <div *ngIf="recipes.length > 0" class="d-flex justify-content-center">
       <pagination [boundaryLinks]="true"
                   [totalItems]="pagination.totalItems"
                   [itemsPerPage]="pagination.itemsPerPage"

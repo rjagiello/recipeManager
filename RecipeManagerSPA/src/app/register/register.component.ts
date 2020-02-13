@@ -28,7 +28,7 @@ export class RegisterComponent implements OnInit {
 
   createRegisterForm() {
     this.registerForm = this.fb.group({
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.maxLength(20)]],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
@@ -39,6 +39,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
+    console.log(this.registerForm);
     if (this.registerForm.valid) {
       this.user = Object.assign({}, this.registerForm.value);
 

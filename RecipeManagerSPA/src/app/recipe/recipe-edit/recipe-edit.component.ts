@@ -51,10 +51,10 @@ export class RecipeEditComponent implements OnInit {
 
   createRecipeForm() {
     this.recipeForm = this.fb.group({
-      name: [this.recipe.name, Validators.required],
-      description: [this.recipe.description, Validators.maxLength(40)],
+      name: [this.recipe.name, [Validators.required, Validators.maxLength(50)]],
+      description: [this.recipe.description, Validators.maxLength(80)],
       category: [this.recipe.category.toString()],
-      preparation: [this.recipe.preparation, Validators.required],
+      preparation: [this.recipe.preparation, [Validators.required, Validators.maxLength(2000)]],
       portions: [this.recipe.portions.toString()]
     });
   }

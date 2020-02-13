@@ -1,6 +1,6 @@
 <div class="container mt-3">
   <div class="row">
-    <h1>Profil {{user.userName}}</h1>
+    <h1 class="ml-3">Profil {{user.userName}}</h1>
   </div>
   <div class="row">
     <div class="col-sm-4">
@@ -19,25 +19,25 @@
       <div class="container mt-2">
         <div class="row">
           <div class="btn-group">
-            <button class="btn btn-dark" 
+            <button class="btn btn-success" 
                     [(ngModel)]="category" 
                     btnRadio="0" 
                     (click)="loadRecipes()">
               Śniadanie
             </button>
-            <button class="btn btn-dark" 
+            <button class="btn btn-success" 
                     [(ngModel)]="category" 
                     btnRadio="1" 
                     (click)="loadRecipes()">
               Obiad
             </button>
-            <button class="btn btn-dark" 
+            <button class="btn btn-success" 
                     [(ngModel)]="category" 
                     btnRadio="2" 
                     (click)="loadRecipes()">
               Kolacja
             </button>
-            <button class="btn btn-dark" 
+            <button class="btn btn-success" 
                     [(ngModel)]="category" 
                     btnRadio="3" 
                     (click)="loadRecipes()">

@@ -8,7 +8,15 @@ namespace RecipeManager.Models
     public class User
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
+		private string _userName;
+		public string UserName
+		{
+			get { return _userName; }
+			set
+			{
+				_userName = value.ToLower();
+			}
+		}
 		public string Email { get; set; }
 		public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }

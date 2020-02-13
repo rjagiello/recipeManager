@@ -1,14 +1,14 @@
 <div class="container mt-3 mb-3">
   <div class="row">
     <div class="cnt">
-      <h1>{{recipe.name}}</h1>
+      <h1>{{recipe.name | titlecase }}</h1>
     </div>
   </div>
   <div class="row">
     <div class="cnt">
-      <div>
+      <p-card>
         <img class="img" src="{{ recipe.photoUrl  || '../../../../../assets/food.png'}}" alt="{{ recipe.name }}" />
-      </div>
+      </p-card>
     </div>
   </div>
   <div class="row">

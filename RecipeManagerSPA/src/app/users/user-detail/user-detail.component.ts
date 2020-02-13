@@ -34,7 +34,7 @@ export class UserDetailComponent implements OnInit {
       this.user = data.user;
     }),
     this.pagination.currentPage = 1;
-    this.pagination.itemsPerPage = 12;
+    this.pagination.itemsPerPage = 6;
     this.category = 0;
     this.loadRecipes();
   }

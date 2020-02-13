@@ -5,7 +5,14 @@
   <div class="form-group">
     <input type="text" class="form-control" placeholder="Nazwa użytkownika" formControlName="username"
       [ngClass]="{'is-invalid': registerForm.get('username').errors && registerForm.get('username').touched}">
-    <div class="invalid-feedback">Podaj nazwę użytkownika</div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('username').hasError('required') && registerForm.get('username').touched">
+      Podaj nazwę użytkownika
+    </div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('username').hasError('maxlength') && registerForm.get('username').touched">
+      Nazwa użytkownika nie może mieć więcej niż 20 znaków
+    </div>
   </div>
 
   <div class="form-group">
